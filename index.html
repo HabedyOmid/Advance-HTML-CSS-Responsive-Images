@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+	<title>Advance HTML CSS Responsive Images</title>
+	<style type="text/css">
+		html, body{
+    		font-family: 'Poppins', sans-serif;
+		}
+		.container{
+			max-width: 1200px;
+			margin: 0 auto;
+			border: 1px solid red;
+			padding: 50px 0;
+		}
+		img{
+			width: 70%;
+			display: block;
+			margin: 0 auto;
+		}
+
+		/*Responsive Image Based on Screen Resultion*/
+		.imgWrapper{
+			width: 70%;
+			height: 550px;
+			display: block;
+			margin: 0 auto;
+			margin-top: 30px;
+			background-size: cover;
+			position: center center;
+			background-repeat: no-repeat;
+			background-image: url('imgs/img-1440-1x_4.jpg'); /*This is for 1px DPI*/
+		}
+
+		/* 
+		When its 192dpi (Retina Display) 
+		AND
+		Browser width is bigger than 600px
+		OR
+		Browser width is smaller than 1200px
+		*/
+		@media (min-resolution: 192dpi) and (min-width: 600px),
+				(max-width: 1200px) { 
+			.imgWrapper{
+				background-image: url('imgs/img-1440-2x_4.jpg'); /*This is for 2px DPI*/
+			}
+		}
+
+	</style>
+</head>
+<body>
+	
+	<div class="container">
+		<h1>Responsive Images:</h1>
+		<ol>
+			<li>Density Switching</li>
+			<li>Art Direction</li>
+			<li>Resolution Switching</li>
+		</ol>
+
+		<h2>1- Density Switching:</h2>
+		<p>This method is using HTML5 attribute <code>srcset</code> for <code> &lt;img srcset=""&gt;</code> tag to define different image sizes for different DPI (Device Pixel Ratio).<p><br>
+
+		<p><strong>Example:</strong></p>
+		<p><code>&lt;img srcset="imgs/img-small1.jpg 1x, imgs/img-large1.jpg 2x"&gt;</code></p>
+		<p><code>1x</code> descriptor is defined to load the small image for lower screen resolution devices. likewise <code>2x</code> descriptor will load large image for larger screen resolution.</p>
+
+		<p><strong>Result:</strong></p>
+		<img srcset="imgs/img-1440-1x_1.jpg 1x, imgs/img-1440-2x_1.jpg 2x"><br>
+
+
+		<h2>2- Art Direction:</h2>
+		<p>This method is used to load different image sizes based on <strong> Media Queries defined for Browser Width</strong> rather than Screen Density.</p>
+		<p>In order to do Art Direction we need to use HTML5 <code>&lt;picture&gt;&lt;/picture&gt;</code> element where we need to specify 2 other elements <code>&lt;source&gt;</code> and <code>&lt;img&gt;</code> elements within the picture element as options.</p>
+
+		<strong>Example:</strong>
+		<pre>
+		<code>
+		&lt;picture&gt;
+			// Browser Width Base Images 
+			&lt;source 
+				srcset="imgs/img-500_2.jpg" 
+				media="(max-width: 500px)"&gt;
+			&lt;source 
+				srcset="imgs/img-700_2.jpg" 
+				media="(max-width: 700px)"&gt;
+			
+			//Fallback Image with density resolution
+			&lt;img srcset="imgs/img-1440-1x_2.jpg 1x, imgs/img-1440-2x_2.jpg 2x"&gt;
+		&lt;/picture&gt;
+		</code>
+		</pre><br>
+		
+		<strong>Result:</strong>
+		<picture>
+			<!-- Browser Width Base Images -->
+			<source 
+				srcset="imgs/img-500_2.jpg" 
+				media="(max-width: 500px)">
+			<source 
+				srcset="imgs/img-700_2.jpg" 
+				media="(max-width: 700px)">
+			
+			<!-- Fallback Image with density resolution -->
+			<img srcset="imgs/img-1440-1x_2.jpg 1x, imgs/img-1440-2x_2.jpg 2x">
+		</picture><br>
+
+
+		<h2>3- Resolution Switching</h2>
+		<p>In this method we force browser to choose the best image size based on <strong>Viewport and DPI</strong>. </p>
+		<p>This method just like density resoltion method we use <code>srcset</code> attribute for <code> &lt;img&gt;</code> tag where we also define the viewport width by using <code>vw</code> descriptor and <code>size</code> attribute to tell browswer which image size is the best for a viewport.</p>
+
+		<img srcset="imgs/img-500_3.jpg 700w, imgs/img-1440-2x_3.jpg 1440w"
+			size="(max-width: 700px) 50vw, (max-width: 1200px) 70vw"><br>
+
+
+		<h2>CSS Tricks For Responsive Images</h2>
+		<p>For better underestand the logic behind css tricks for responsive images refer to source codes.</p>
+		<strong>Result for CSS Media Query:</strong><br>
+		<div class="imgWrapper"></div><br>
+
+		<strong>NOTE: I personally prefer Art Direction method for responsive images, since i have the most power to control image sizes based on browser width using media queries.</strong>
+	</div>
+</body>
+</html>
